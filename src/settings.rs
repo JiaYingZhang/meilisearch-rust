@@ -38,7 +38,7 @@ pub struct FacetingSettings {
 
 /// Allows configuring semantic searching
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
-#[serde(rename_all = "camelCase", tag = "source")]
+#[serde(rename_all = "lowercase", tag = "source")]
 pub enum Embedder {
     /// Compute embeddings inside meilisearch with models from [HuggingFace](https://huggingface.co/).
     /// You may be able to significantly improve performance by [compiling a CUDA-compatible Meilisearch binary](https://www.meilisearch.com/docs/guides/ai/computing_hugging_face_embeddings_gpu).
