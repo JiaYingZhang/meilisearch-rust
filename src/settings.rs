@@ -41,12 +41,14 @@ pub struct FacetingSettings {
 #[serde(rename_all = "lowercase", tag = "source")]
 pub enum Embedder {
     /// Compute embeddings inside meilisearch with models from [HuggingFace](https://huggingface.co/).
+    ///
     /// You may be able to significantly improve performance by [compiling a CUDA-compatible Meilisearch binary](https://www.meilisearch.com/docs/guides/ai/computing_hugging_face_embeddings_gpu).
     /// This is a resource-intensive operation and might affect indexing performance negatively.
     HuggingFace(HuggingFaceEmbedderSettings),
     /// Use OpenAI's API to generate embeddings
-    /// Depending on hardware, this is a
-    OpenAI(OpenAIEmbedderSettings),
+    ///
+    /// Depending on your hardware, this network request may be faster
+    OpenAi(OpenAIEmbedderSettings),
     /// [Ollama](https://ollama.com/) is a framework for building and running language models locally.
     Ollama(OllamaEmbedderSettings),
     /// Supports arbitrary embedders which supply a [REST](https://en.wikipedia.org/wiki/REST) interface
@@ -233,8 +235,8 @@ pub struct OllamaEmbedderSettings {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub document_template: Option<String>,
     /// The maximum size of a rendered document template.
-    //
-    // Longer texts are truncated to fit the configured limit.
+    ///
+    /// Longer texts are truncated to fit the configured limit.
     /// Default: `400`
     #[serde(skip_serializing_if = "Option::is_none")]
     pub document_template_max_bytes: Option<usize>,
@@ -282,7 +284,6 @@ pub struct GenericRestEmbedderSettings {
     /// Mandatory, full URL to the embedding endpoint
     ///
     /// Must be parseable as a URL.
-    /// If not specified, [Meilisearch](https://www.meilisearch.com/) (**not the sdk you are currently using**) will try to fetch the `MEILI_OLLAMA_URL` environment variable
     /// Example: `"http://localhost:12345/api/v1/embed"`
     #[serde(skip_serializing_if = "Option::is_none")]
     pub url: Option<String>,
